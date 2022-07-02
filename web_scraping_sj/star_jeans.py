@@ -122,12 +122,20 @@ def details(url, headers, color_info):
 
         # price and name
         info1 = soup.find('div', class_='inner')
-        name = info1.find('h1').text
-        price = info1.find('span', class_='price-value').text
+        if info1:
+            name = info1.find('h1').text
+            price = info1.find('span', class_='price-value').text
+        else:
+            name = 'NaN'
+            price = 'NaN'
 
         # product features
         info2 = soup.find('div', class_='details parbase')
-        aux2 = [list(filter(None, i.get_text().split('\n'))) for i in info2.find('dl').find_all('div')]
+        if info2:
+            aux2 = [list(filter(None, i.get_text().split('\n'))) for i in info2.find('dl').find_all('div')]
+        else:
+            aux2 = [['Size', 'NaN'], ['Fit', 'NaN'], ['Composition', 'NaN', 'NaN'],
+                    ['Art. No.', 'NaN'], ['Product safety', 'NaN']]
 
         # index
         line = color_info[color_info['color_url'] == url].index
